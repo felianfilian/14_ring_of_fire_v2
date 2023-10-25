@@ -3,7 +3,8 @@ import { Game } from 'src/models/game';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
 import { GameInfoComponent } from '../game-info/game-info.component';
-import { Firestore, collection } from '@angular/fire/firestore';
+import { Firestore } from '@angular/fire/firestore';
+import { collection } from 'rxfire/firestore';
 
 @Component({
   selector: 'app-game',
@@ -13,19 +14,17 @@ import { Firestore, collection } from '@angular/fire/firestore';
 export class GameComponent implements OnInit {
   pickCardAnimation = false;
   currentCard: string = '';
-  game: Game;
+  game?: Game;
+  firestore: Firestore = inject(Firestore);
 
-  private firestore: Firestore = inject(Firestore);
+  constructor(public dialog: MatDialog) {}
 
-  constructor(public dialog: MatDialog) {
-    this.game = new Game();
-    const colData = collection(this.firestore, 'game');
-    console.log(colData);
+  ngOnInit(): void {
+    this.newGame();
   }
 
-  ngOnInit(): void {}
-
   newGame() {
+    this.game = new Game();
     console.log(this.game);
   }
 
