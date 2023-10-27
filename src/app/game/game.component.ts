@@ -18,9 +18,19 @@ export class GameComponent implements OnInit {
   currentCard: string = '';
   game: Game = new Game();
 
+  items$;
+  items;
+
   firestore: Firestore = inject(Firestore);
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog) {
+    this.items$ = collectionData(this.getGamesRef());
+    this.items = this.items$.subscribe((list) => {
+      list.forEach((element) => {
+        console.log(element);
+      });
+    });
+  }
 
   ngOnInit(): void {
     this.newGame();
@@ -28,7 +38,6 @@ export class GameComponent implements OnInit {
 
   newGame() {
     this.game = new Game();
-    console.log(this.getGamesRef());
   }
 
   getGamesRef() {
