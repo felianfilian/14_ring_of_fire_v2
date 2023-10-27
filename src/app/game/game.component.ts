@@ -1,20 +1,23 @@
-import { Component, OnInit, inject } from "@angular/core";
-import { Game } from "src/models/game";
-import { MatDialog } from "@angular/material/dialog";
-import { DialogAddPlayerComponent } from "../dialog-add-player/dialog-add-player.component";
-import { GameInfoComponent } from "../game-info/game-info.component";
-import { Firestore } from "@angular/fire/firestore";
-import { collection } from "rxfire/firestore";
+import { Component, OnInit, inject } from '@angular/core';
+import { Game } from 'src/models/game';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
+import { GameInfoComponent } from '../game-info/game-info.component';
+import { Firestore, collection, getFirestore } from '@angular/fire/firestore';
+import { collectionData, doc } from 'rxfire/firestore';
+import { initializeApp } from '@angular/fire/app';
+import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: "app-game",
-  templateUrl: "./game.component.html",
-  styleUrls: ["./game.component.scss"],
+  selector: 'app-game',
+  templateUrl: './game.component.html',
+  styleUrls: ['./game.component.scss'],
 })
 export class GameComponent implements OnInit {
   pickCardAnimation = false;
-  currentCard: string = "";
+  currentCard: string = '';
   game: Game = new Game();
+
   firestore: Firestore = inject(Firestore);
 
   constructor(public dialog: MatDialog) {}
@@ -25,7 +28,11 @@ export class GameComponent implements OnInit {
 
   newGame() {
     this.game = new Game();
-    console.log(this.game);
+    console.log(this.getGamesRef());
+  }
+
+  getGamesRef() {
+    return collection(this.firestore, 'games');
   }
 
   takeCard() {
@@ -44,7 +51,7 @@ export class GameComponent implements OnInit {
           this.pickCardAnimation = false;
         }, 1000);
       } else {
-        alert("Please Add a Player");
+        alert('Please Add a Player');
       }
     }
   }
