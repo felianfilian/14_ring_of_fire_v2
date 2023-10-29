@@ -3,7 +3,12 @@ import { Game } from 'src/models/game';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
 import { GameInfoComponent } from '../game-info/game-info.component';
-import { Firestore, collection, getFirestore } from '@angular/fire/firestore';
+import {
+  Firestore,
+  addDoc,
+  collection,
+  getFirestore,
+} from '@angular/fire/firestore';
 import { collectionData, doc } from 'rxfire/firestore';
 import { initializeApp } from '@angular/fire/app';
 import { environment } from 'src/environments/environment';
@@ -38,6 +43,11 @@ export class GameComponent implements OnInit {
 
   newGame() {
     this.game = new Game();
+    this.addGame();
+  }
+
+  async addGame() {
+    await addDoc(this.getGamesRef(), this.game.toJson());
   }
 
   getGamesRef() {
