@@ -43,7 +43,7 @@ export class GameComponent implements OnInit {
 
   newGame() {
     this.game = new Game();
-    this.addGame();
+    //this.addGame();
   }
 
   async addGame() {
