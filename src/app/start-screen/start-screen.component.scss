@@ -8,11 +8,18 @@
   height: 100vh;
 
   background-color: #615959;
+
+  @media (max-width: 960px) {
+    overflow: hidden;
+  }
 }
 
 .start-img-01 {
   width: 80vw;
   height: auto;
+  @media (max-width: 992px) {
+    width: 100vw;
+  }
 }
 
 .button01 {
@@ -27,13 +34,21 @@
 
   img {
     width: 35vw;
-    min-width: 300px;
+    min-width: 200px;
     height: auto;
 
     cursor: pointer;
 
     &:hover {
       filter: brightness(1.1);
+    }
+
+    @media (max-width: 992px) {
+      width: 400px;
+    }
+
+    @media (max-width: 576px) {
+      width: 80vw;
     }
   }
 }
